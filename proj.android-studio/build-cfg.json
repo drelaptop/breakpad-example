@@ -1,0 +1,8 @@
+{
+    "ndk_module_path" :[
+        "/Users/laptop/code-github/fireball/cocos2d-x",
+        "/Users/laptop/code-github/fireball/cocos2d-x/cocos",
+        "/Users/laptop/code-github/fireball/cocos2d-x/external"
+    ],
+    "copy_resources": []
+}
