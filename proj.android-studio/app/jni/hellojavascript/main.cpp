@@ -28,6 +28,10 @@
 #include "platform/android/jni/JniHelper.h"
 #include <jni.h>
 #include <android/log.h>
+
+#include "client/linux/handler/exception_handler.h"
+#include "client/linux/handler/minidump_descriptor.h"
+
 #if PACKAGE_AS
 #include "PluginJniHelper.h"
 #include "SDKManager.h"
@@ -40,6 +44,18 @@ using namespace cocos2d;
 #if PACKAGE_AS
 using namespace anysdk::framework;
 #endif
+
+bool DumpCallback(const google_breakpad::MinidumpDescriptor& descriptor,
+                  void* context,
+                  bool succeeded) {
+    printf("Dump path: %s\n", descriptor.path());
+    return succeeded;
+}
+
+void Crash() {
+    volatile int* a = reinterpret_cast<volatile int*>(NULL);
+    *a = 1;
+}
 
 //called when JNI_OnLoad()
 void cocos_jni_env_init (JNIEnv* env) {
@@ -55,6 +71,12 @@ void cocos_jni_env_init (JNIEnv* env) {
 Application* cocos_android_app_init (JNIEnv* env, int width, int height) {
     LOGD("cocos_android_app_init");
     auto app = new AppDelegate(width, height);
+    //
+    google_breakpad::MinidumpDescriptor descriptor(".");
+    google_breakpad::ExceptionHandler eh(descriptor, NULL, DumpCallback,
+                                         NULL, true, -1);
+    Crash();
+
     return app;
 }
 

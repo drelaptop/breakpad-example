@@ -22,7 +22,8 @@ android {
                     
                     def module_paths = [project.file("/Users/laptop/code-github/fireball/cocos2d-x"),
                                         project.file("/Users/laptop/code-github/fireball/cocos2d-x/cocos"),
-                                        project.file("/Users/laptop/code-github/fireball/cocos2d-x/external")]
+                                        project.file("/Users/laptop/code-github/fireball/cocos2d-x/external"),
+                                        project.file("${buildDir}/../../../Classes")]
                     if (Os.isFamily(Os.FAMILY_WINDOWS)) {
                         arguments 'NDK_MODULE_PATH=' + module_paths.join(";")
                     }
