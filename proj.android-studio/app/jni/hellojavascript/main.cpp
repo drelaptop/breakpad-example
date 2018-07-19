@@ -48,7 +48,7 @@ using namespace anysdk::framework;
 bool DumpCallback(const google_breakpad::MinidumpDescriptor& descriptor,
                   void* context,
                   bool succeeded) {
-    printf("Dump path: %s\n", descriptor.path());
+    LOGD("cocos_init_dump DumpCallback: %s", descriptor.path());
     return succeeded;
 }
 
